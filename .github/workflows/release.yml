@@ -1,0 +1,31 @@
+---
+name: "release-latest"
+
+on:
+    push:
+        branches:
+            - "main"
+
+jobs:
+    release:
+        name: "Pong"
+        runs-on: "ubuntu-latest"
+
+        steps:
+            - uses: actions/checkout@v3
+              with:
+                  fetch-depth: 0
+            - name: "Compress and Release"
+              run: |
+                  echo "Compressing files..."
+                  zip -r pong . -x _\* .\*
+            - uses: "marvinpinto/action-automatic-releases@latest"
+              with:
+                  repo_token: "${{ secrets.GITHUB_TOKEN }}"
+                  automatic_release_tag: "latest"
+                  prerelease: false
+                  title: "Pong"
+                  files: |
+                      pong.zip
+            - run: |
+                  echo "Files have been successfully compressed."
