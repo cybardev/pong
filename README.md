@@ -4,6 +4,10 @@
 
 **Author**: Sheikh Saad Abdullah (A00447871)
 
+### Usage
+
+Run `pong.py` using Python (v3.10.8+)
+
 ### Dependencies
 
 -   python (v3.10.8)

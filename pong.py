@@ -41,7 +41,7 @@ if __name__ == "__main__":
     root.withdraw()
     pygame.init()
     pygame.mixer.init()
-    pygame.mixer.music.load("err.mp3")
+    pygame.mixer.music.load("gameover.wav")
 
     # Open a new window
     size = SCREEN_SIZE
