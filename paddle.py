@@ -4,24 +4,21 @@ from values import *
 
 class Paddle(pygame.sprite.Sprite):
     """
-    This class represents a paddle.
-    It derives from the "Sprite" class in Pygame.
+    Class to represent a paddle
     """
 
     def __init__(self, color, width, height):
-        # Call the parent class (Sprite) constructor
         super().__init__()
 
-        # Pass in the color of the Paddle, its width and height
-        # Set the background color and set it to be transparent
+        # set attributes
         self.image = pygame.Surface([width, height])
         self.image.fill(BLACK)
         self.image.set_colorkey(BLACK)
 
-        # Draw the paddle (a rectangle!)
+        # draw the paddle
         pygame.draw.rect(self.image, color, [X, Y, width, height])
 
-        # Fetch the rectangle object that has the dimensions of the image.
+        # get rectangle object with the dimensions of the image
         self.rect: pygame.rect.Rect = self.image.get_rect()
 
     def set_y_pos(self, y):
@@ -37,7 +34,7 @@ class Paddle(pygame.sprite.Sprite):
         self.__validate_y_pos()
 
     def __validate_y_pos(self):
-        # Check that you are not going too far (off the screen)
+        # keep within screen bounds
         if self.rect.y < 0:
             self.rect.y = 0
         if self.rect.y > 400:

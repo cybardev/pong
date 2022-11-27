@@ -1,24 +1,26 @@
-# initial values
-USE_ANTIALIASING = True
-INIT_SCORE = 0
-FPS = 60
-P1, P2 = 0, 1
-
-# some colors
+# miscellaneous values
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
-
-# screen dimensions
-SCREEN_SIZE = (700, 500)
-
-# representations of coordinate axes
+USE_ANTIALIASING = True
+INIT_SCORE = 0
+MAX_SCORE = 5
+SCORE_UNIT = 1  # increment scores by this amount
+FPS = 60
+P1, P2 = 0, 1
 X, Y = 0, 1
+
+# initial positions
+P1_INIT_POS = (10, 200)
+P2_INIT_POS = (670, 200)
+BALL_INIT_POS = (340, 195)
+P1_SCORE_POS = (250, 10)
+P2_SCORE_POS = (420, 10)
+
+# dimensions
+SCREEN_SIZE = (700, 500)
+NET_DIMENSIONS = ([349, 0], [349, 500], 5)  # start, end, thickness
+PADDLE_HEIGHT, PADDLE_WIDTH = 100, 20
+BALL_SIZE = 20
 
 # default velocity
 BALL_VELOCITY, PADDLE_VELOCITY = 5, 5
-
-# ball dimensions
-BALL_SIZE = 20
-
-# paddle dimensions
-PADDLE_HEIGHT, PADDLE_WIDTH = 100, 20

@@ -1,0 +1,115 @@
+#!/usr/bin/env python3
+
+import pygame
+from values import *
+from paddle import Paddle
+from ball import Ball
+import tkinter as tk
+from tkinter import messagebox
+
+
+def init_objects():
+    """Initialize game objects"""
+
+    paddles = [
+        Paddle(WHITE, PADDLE_WIDTH, PADDLE_HEIGHT),
+        Paddle(WHITE, PADDLE_WIDTH, PADDLE_HEIGHT),
+    ]
+
+    paddles[P1].rect.x, paddles[P1].rect.y = P1_INIT_POS
+    paddles[P2].rect.x, paddles[P2].rect.y = P2_INIT_POS
+
+    ball = Ball(WHITE, BALL_SIZE, BALL_SIZE)
+    ball.rect.x, ball.rect.y = BALL_INIT_POS
+
+    scores = [INIT_SCORE, INIT_SCORE]
+
+    all_sprites_list = pygame.sprite.Group()
+
+    all_sprites_list.add(paddles[P1])
+    all_sprites_list.add(paddles[P2])
+    all_sprites_list.add(ball)
+
+    return paddles, ball, scores, all_sprites_list
+
+
+if __name__ == "__main__":
+    # initialize game engine and interface
+    root = tk.Tk()
+    root.withdraw()
+    pygame.init()
+    pygame.mixer.init()
+    pygame.mixer.music.load("gameover.wav")
+    screen = pygame.display.set_mode(SCREEN_SIZE)
+    pygame.display.set_caption("Pong")
+    paddles, ball, scores, all_sprites_list = init_objects()
+    clock = pygame.time.Clock()
+
+    keep_playing = True
+    while keep_playing:
+        for event in pygame.event.get():  # for every user action
+            if event.type == pygame.QUIT:  # check if user clicked close
+                keep_playing = False  # exit game loop
+
+        # start game
+        keys = pygame.key.get_pressed()
+
+        # move the user-controlled paddle when the arrow keys are pressed
+        if keys[pygame.K_q]:
+            paddles[P2].move_up(PADDLE_VELOCITY)
+        if keys[pygame.K_a]:
+            paddles[P2].move_down(PADDLE_VELOCITY)
+
+        # move the computer-controlled paddle to always get the ball
+        paddles[P1].set_y_pos(ball.rect.y + (BALL_SIZE - PADDLE_HEIGHT) / 2)
+
+        # update all sprites
+        all_sprites_list.update()
+
+        # bounce the ball if it collides with any of the paddles
+        if pygame.sprite.collide_rect(ball, paddles[P1]):
+            ball.velocity[X] = abs(ball.velocity[X])
+        elif pygame.sprite.collide_rect(ball, paddles[P2]):
+            ball.velocity[X] = -abs(ball.velocity[X])
+        else:
+            # check ball bounce against walls
+            if ball.rect.x >= SCREEN_SIZE[X] - BALL_SIZE:
+                scores[P1] += SCORE_UNIT
+                ball.velocity[X] = -ball.velocity[X]
+            if ball.rect.x <= X:
+                scores[P2] += SCORE_UNIT
+                ball.velocity[X] = -ball.velocity[X]
+            if not ball.rect.y in range(SCREEN_SIZE[Y] - BALL_SIZE):
+                ball.velocity[Y] = -ball.velocity[Y]
+
+        # set screen to black
+        screen.fill(BLACK)
+        # draw centreline
+        pygame.draw.line(screen, WHITE, *NET_DIMENSIONS)
+
+        # draw all sprites
+        all_sprites_list.draw(screen)
+
+        # display scores
+        font = pygame.font.Font(None, 74)
+        screen.blit(
+            font.render(str(scores[P1]), USE_ANTIALIASING, WHITE), P1_SCORE_POS
+        )
+        screen.blit(
+            font.render(str(scores[P2]), USE_ANTIALIASING, WHITE), P2_SCORE_POS
+        )
+
+        # redraw screen to reflect changes
+        pygame.display.flip()
+        clock.tick(FPS)
+
+        # stop game if score becomes 5 for either player
+        if MAX_SCORE in (scores[P1], scores[P2]):
+            pygame.mixer.music.play()
+            if messagebox.askyesno("Restart Game", "Play again?"):
+                paddles, ball, scores, all_sprites_list = init_objects()
+            else:
+                keep_playing = False
+
+    # exit engine when game loop ends
+    pygame.quit()

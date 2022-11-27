@@ -4,25 +4,25 @@ from random import choice
 
 
 class Ball(pygame.sprite.Sprite):
-    """Class to represent a ball in the game"""
+    """
+    Class to represent a ball
+    """
 
     def __init__(self, color, width, height):
-        # Call the parent class (Sprite) constructor
         super().__init__()
 
-        # Pass in the color of the ball, its width and height
-        # Set the background color to transparent
+        # set attributes
         self.image = pygame.Surface([width, height])
         self.image.fill(BLACK)
         self.image.set_colorkey(BLACK)
 
-        # Draw the ball
+        # draw the ball
         pygame.draw.rect(self.image, color, [X, Y, width, height])
 
-        # Set initial velocity
+        # set initial velocity
         self.velocity = [choice((-BALL_VELOCITY, BALL_VELOCITY)), BALL_VELOCITY]
 
-        # Fetch the rectangle object that has the dimensions of the image
+        # get rectangle object with the dimensions of the image
         self.rect: pygame.rect.Rect = self.image.get_rect()
 
     def update(self):
