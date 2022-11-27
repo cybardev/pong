@@ -21,8 +21,8 @@ class Pong:
             Paddle(WHITE, PADDLE_WIDTH, PADDLE_HEIGHT),
         ]
 
-        self.paddles[P1].rect.x, self.paddles[P1].rect.y = P1_INIT_POS
-        self.paddles[P2].rect.x, self.paddles[P2].rect.y = P2_INIT_POS
+        self.paddles[P1].rect.x, self.paddles[P1].rect.y = PADDLE_INIT_POS[P1]
+        self.paddles[P2].rect.x, self.paddles[P2].rect.y = PADDLE_INIT_POS[P2]
 
         self.ball = Ball(WHITE, BALL_SIZE, BALL_SIZE)
         self.ball.rect.x, self.ball.rect.y = BALL_INIT_POS
@@ -59,12 +59,12 @@ class Pong:
 
             # move the user-controlled paddle when the arrow keys are pressed
             if keys[pygame.K_q]:
-                self.paddles[P2].move_up(PADDLE_VELOCITY)
+                self.paddles[P1].move_up(PADDLE_VELOCITY)
             if keys[pygame.K_a]:
-                self.paddles[P2].move_down(PADDLE_VELOCITY)
+                self.paddles[P1].move_down(PADDLE_VELOCITY)
 
             # move the computer-controlled paddle to always get the ball
-            self.paddles[P1].set_y_pos(
+            self.paddles[P2].set_y_pos(
                 self.ball.rect.y + (BALL_SIZE - PADDLE_HEIGHT) / 2
             )
 
@@ -99,11 +99,11 @@ class Pong:
             font = pygame.font.Font(None, 74)
             screen.blit(
                 font.render(str(self.scores[P1]), USE_ANTIALIASING, WHITE),
-                P1_SCORE_POS,
+                SCORE_POS[P1],
             )
             screen.blit(
                 font.render(str(self.scores[P2]), USE_ANTIALIASING, WHITE),
-                P2_SCORE_POS,
+                SCORE_POS[P2],
             )
 
             # redraw screen to reflect changes
@@ -111,7 +111,7 @@ class Pong:
             clock.tick(FPS)
 
             # stop game if score becomes 5 for either player
-            if MAX_SCORE in (self.scores[P1], self.scores[P2]):
+            if MAX_SCORE in self.scores:
                 pygame.mixer.music.play()
                 if messagebox.askyesno("Restart Game", "Play again?"):
                     self.__init__()

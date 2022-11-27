@@ -10,11 +10,9 @@ P1, P2 = 0, 1
 X, Y = 0, 1
 
 # initial positions
-P1_INIT_POS = (10, 200)
-P2_INIT_POS = (670, 200)
+PADDLE_INIT_POS = (10, 200), (670, 200)
 BALL_INIT_POS = (340, 195)
-P1_SCORE_POS = (250, 10)
-P2_SCORE_POS = (420, 10)
+SCORE_POS = (250, 10), (420, 10)
 
 # dimensions
 SCREEN_SIZE = (700, 500)
