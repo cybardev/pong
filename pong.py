@@ -42,12 +42,15 @@ class Pong:
         root = tk.Tk()
         root.withdraw()
         pygame.init()
-        pygame.mixer.init()
-        pygame.mixer.music.load("gameover.wav")
         screen = pygame.display.set_mode(SCREEN_SIZE)
         pygame.display.set_caption("Pong")
         clock = pygame.time.Clock()
 
+        # load audio component
+        pygame.mixer.init()
+        pygame.mixer.music.load("gameover.wav")
+
+        # main game loop
         keep_playing = True
         while keep_playing:
             for event in pygame.event.get():  # for every user action
