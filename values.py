@@ -11,7 +11,7 @@ X, Y = 0, 1
 
 # initial positions
 PADDLE_INIT_POS = (10, 200), (670, 200)
-BALL_INIT_POS = (340, 195)
+BALL_INIT_POS = (340, 230)
 SCORE_POS = (250, 10), (420, 10)
 
 # dimensions

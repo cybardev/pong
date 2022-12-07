@@ -83,9 +83,11 @@ class Pong:
                 # check ball bounce against walls
                 if self.ball.rect.x >= SCREEN_SIZE[X] - BALL_SIZE:
                     self.scores[P1] += SCORE_UNIT
+                    self.ball.rect.x, self.ball.rect.y = BALL_INIT_POS
                     self.ball.velocity[X] = -self.ball.velocity[X]
                 if self.ball.rect.x <= X:
                     self.scores[P2] += SCORE_UNIT
+                    self.ball.rect.x, self.ball.rect.y = BALL_INIT_POS
                     self.ball.velocity[X] = -self.ball.velocity[X]
                 if not self.ball.rect.y in range(SCREEN_SIZE[Y] - BALL_SIZE):
                     self.ball.velocity[Y] = -self.ball.velocity[Y]
