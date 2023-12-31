@@ -1,5 +1,5 @@
 import pygame
-from values import *
+from values import X, Y, BLACK
 
 
 class Paddle(pygame.sprite.Sprite):
