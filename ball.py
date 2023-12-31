@@ -1,5 +1,5 @@
 import pygame
-from values import BLACK, BALL_VELOCITY
+from values import X, Y, BLACK, BALL_VELOCITY
 from random import choice
 
 
